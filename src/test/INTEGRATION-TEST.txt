@@ -66,5 +66,5 @@ STEPS:
 	xii) 	root - This parameter should always be set to "dropbox".
 	xiii) 	autoRoot - This parameter should always be set to "auto".
 		
- 6. Navigate to "<ESB_CONNECTOR_HOME>/" and run the following command.
+ 6. Navigate to "<DROPBOX_CONNECTOR_HOME>/" and run the following command.
     $ mvn clean install
