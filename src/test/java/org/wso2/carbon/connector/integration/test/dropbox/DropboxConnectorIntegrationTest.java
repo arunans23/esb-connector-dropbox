@@ -54,7 +54,6 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
         apiRequestHeadersMap.put("Accept-Charset", "UTF-8");
         apiRequestHeadersMap.put("Content-Type", "application/x-www-form-urlencoded");
         apiRequestHeadersMap.put("Authorization", "Bearer " + connectorProperties.getProperty("accessToken"));
-
     }
 
     /**
@@ -143,11 +142,9 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
                                 + "&accessToken=" + connectorProperties.getProperty("accessToken")
                                 + "&uploadId=" + uploadId + "&offset=" + offest;
             }
-
             multipartProcessor = new MultipartFormdataProcessor(requestString, headersMap);
             multipartProcessor.addChunckedFiletoRequestBody(bytesPortion);
             esbRestResponse = multipartProcessor.processAttachmentForJsonResponse();
-
             if (attempts == 1) {
                 uploadId = esbRestResponse.getBody().getString("upload_id");
                 offest = esbRestResponse.getBody().getString("offset");
@@ -156,18 +153,14 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
             uploadId = esbRestResponse.getBody().getString("upload_id");
             offest = esbRestResponse.getBody().getString("offset");
             connectorProperties.put("uploadId", uploadId);
-
             byteNumber += bytesPortion.length;
         }
-
         if (is != null) {
             is.close();
         }
-
         // Run Chunk Commit method
         esbRequestHeadersMap.put("Action", "urn:commitChunk");
         sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "commitChunk.json");
-
         String apiRequestString =
                 connectorProperties.getProperty("contentApiUrl") + "/1/files/"
                         + connectorProperties.getProperty("root") + "/"
@@ -546,7 +539,6 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
 
         RestResponse<JSONObject> apiRestResponse =
                 sendJsonRestRequest(apiEndPoint, "POST", apiRequestHeadersMap, "api_share_mandatory.json");
-
         Assert.assertEquals(esbRestResponse.getBody().get("url").toString(), apiRestResponse.getBody().get("url")
                 .toString());
     }
@@ -573,7 +565,6 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
 
         RestResponse<JSONObject> apiRestResponse =
                 sendJsonRestRequest(apiEndPoint, "POST", apiRequestHeadersMap, "api_share_optional.json");
-
         Assert.assertEquals(esbRestResponse.getBody().get("url").toString(), apiRestResponse.getBody().get("url")
                 .toString());
     }
@@ -995,20 +986,14 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     }
 
     private String getFileHash(InputStream in) throws IOException, NoSuchAlgorithmException {
-
         MessageDigest md = MessageDigest.getInstance("SHA1");
-
         byte[] dataBytes = new byte[1024];
-
         int nread = 0;
-
         while ((nread = in.read(dataBytes)) != -1) {
             md.update(dataBytes, 0, nread);
         }
         ;
-
         byte[] mdbytes = md.digest();
-
         // convert the byte to hex format
         StringBuffer sb = new StringBuffer("");
         for (int i = 0; i < mdbytes.length; i++) {
