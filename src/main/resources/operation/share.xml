@@ -43,6 +43,7 @@
                 </payloadFactory>
             </else>
         </filter>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="post"

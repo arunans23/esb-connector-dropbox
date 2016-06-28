@@ -37,11 +37,12 @@
 			   query += "locale=" + locale + "&";	
 			}
 			if(query!=null && query!=""){
-			   query = '?' + query.substring(0,query.length-1);
+			   query = '?' + query.toString().substring(0,query.toString().lastIndexOf("&"));
 			}  
 			mc.setProperty('uri.var.query', query);					
          ]]>
         </script>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="get"

@@ -48,33 +48,34 @@
 				var includeMediaInfo = mc.getProperty('uri.var.includeMediaInfo');
 				var urlQuery = '';
 				if(fileLimit != null && fileLimit != "") {
-					urlQuery += '&file_limit=' + fileLimit;
+					urlQuery += 'file_limit=' + fileLimit + '&';
 				}
 				if(locale != null && locale != "") {
-					urlQuery += '&locale=' + locale;
+					urlQuery += 'locale=' + locale + '&';
 				}
 				if(rev != null && rev != "") {
-					urlQuery += '&rev=' + rev;
+					urlQuery += 'rev=' + rev + '&';
 				}
 				if(hash != null && hash != "") {
-					urlQuery += '&hash=' + hash;
+					urlQuery += 'hash=' + hash + '&';
 				}
 				if(list != null && list != "") {
-					urlQuery += '&list=' + list;
+					urlQuery += 'list=' + list + '&';
 				}
 				if(includeDeleted != null && includeDeleted != "") {
-					urlQuery += '&include_deleted=' + includeDeleted;
+					urlQuery += 'include_deleted=' + includeDeleted + '&';
 				}
 				if(includeMediaInfo != null && includeMediaInfo != "") {
-					urlQuery += '&include_media_info=' + includeMediaInfo;;
+					urlQuery += 'include_media_info=' + includeMediaInfo + '&';
 				}
 				// Add a leading '?' and remove the trailing '&'
 				if (urlQuery != '') {
-					urlQuery = '?' + urlQuery.substring(1, urlQuery.length);
+					urlQuery = '?' + urlQuery.toString().substring(0, urlQuery.toString().lastIndexOf("&"));
 					mc.setProperty('uri.var.urlQuery', encodeURI(urlQuery));
 				}
 			]]>
         </script>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="get"

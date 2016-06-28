@@ -37,7 +37,7 @@
             var root = mc.getProperty("uri.var.root");
             payload = mc.getPayloadJSON();
             if (root != null && root != ""){
-               payload.root = root.substring(1);
+               payload.root = root.toString().substring(1);
             }     
 		    if(locale!= null && locale != ''){
 		    	payload.locale = locale;
@@ -46,6 +46,7 @@
 			]]>
         </script>
         <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="POST" uri-template="{+uri.var.apiUrl}/fileops/create_folder"/>
