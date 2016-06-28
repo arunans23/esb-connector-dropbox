@@ -40,6 +40,7 @@
                 }                                                     
 	        ]]>
         </script>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="get"

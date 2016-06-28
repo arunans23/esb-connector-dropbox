@@ -43,6 +43,7 @@
         <property name="Content-Length" expression="get-property('uri.var.contentLength')"
                   scope="transport"
                   type="STRING"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="put"

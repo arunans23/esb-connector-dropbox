@@ -29,6 +29,7 @@
         <property name="uri.var.accessToken" expression="$func:accessToken"/>
         <property name="uri.var.uploadId" expression="$func:uploadId"/>
         <property name="uri.var.offset" expression="$func:offset"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <filter source="boolean(get-property('uri.var.uploadId'))" regex="true">
             <then>
                 <call>

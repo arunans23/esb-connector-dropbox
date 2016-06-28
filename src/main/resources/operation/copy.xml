@@ -58,12 +58,13 @@
 		    	payload.from_copy_ref = fromCopyRef;		    	
 		    }
             if (root != null && root != ""){
-               payload.root = root.substring(1);   
+               payload.root = root.toString().substring(1);
             }    
 		    mc.setPayloadJSON(payload);
 			]]>
         </script>
         <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="POST" uri-template="{+uri.var.apiUrl}/fileops/copy"/>

@@ -41,11 +41,12 @@
                   urlQuery+='locale='+ locale +'&';
                }
                if(urlQuery.length!=1){
-      		       urlQuery='?'+urlQuery.substring(0, urlQuery.length-1)
+      		       urlQuery='?'+urlQuery.toString().substring(0, urlQuery.toString().lastIndexOf("&"))
       		       mc.setProperty('uri.var.urlQuery', urlQuery);                               
                }              	                                                             
 			]]>
         </script>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
         <call>
             <endpoint>
                 <http method="post"
