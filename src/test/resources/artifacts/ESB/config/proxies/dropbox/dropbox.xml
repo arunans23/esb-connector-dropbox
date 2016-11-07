@@ -24,7 +24,9 @@
         <inSequence>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
             <property name="accessToken" expression="json-eval($.accessToken)"/>
-            <property name="root" expression="json-eval($.root)"/>
+            <property name="apiVersion" expression="json-eval($.apiVersion)"/>
+            <property name="blocking" expression="json-eval($.blocking)"/>
+            <property name="autoRename" expression="json-eval($.autoRename)"/>
             <property name="path" expression="json-eval($.path)"/>
             <property name="rev" expression="json-eval($.rev)"/>
             <property name="query" expression="json-eval($.query)"/>
@@ -41,62 +43,70 @@
             <property name="overwrite" expression="json-eval($.overwrite)"/>
             <property name="parentRev" expression="json-eval($.parentRev)"/>
             <property name="uploadId" expression="json-eval($.uploadId)"/>
+            <property name="mode" expression="json-eval($.mode)"/>
+            <property name="clientModified" expression="json-eval($.clientModified)"/>
+            <property name="allowSharedFolder" expression="json-eval($.allowSharedFolder)"/>
+            <property name="requestedVisibility" expression="json-eval($.requestedVisibility)"/>
+            <property name="linkPassword" expression="json-eval($.linkPassword)"/>
+            <property name="expires" expression="json-eval($.expires)"/>
+            <property name="limit" expression="json-eval($.limit)"/>
+            <property name="start" expression="json-eval($.start)"/>
+            <property name="maxResults" expression="json-eval($.maxResults)"/>
+            <property name="close" expression="json-eval($.close)"/>
+            <property name="sessionId" expression="json-eval($.sessionId)"/>
+            <property name="offset" expression="json-eval($.offset)"/>
             <filter
-                    xpath="get-property('transport', 'Action') = 'urn:chunkUpload' or get-property('transport', 'Action') = 'urn:uploadFile'">
+                    xpath="get-property('transport', 'Action') = 'urn:startUploadSession' or get-property('transport', 'Action') = 'urn:uploadFile' or get-property('transport', 'Action') = 'urn:appendToUploadSession' or get-property('transport', 'Action') = 'urn:finishUploadSession' ">
                 <then>
                     <dropbox.init>
                         <apiUrl>{$url:apiUrl}</apiUrl>
+                        <apiVersion>{$url:apiVersion}</apiVersion>
                         <accessToken>{$url:accessToken}</accessToken>
-                        <root>{$url:root}</root>
+                        <blocking>{$url:blocking}</blocking>
                         <path>{$url:path}</path>
                     </dropbox.init>
                 </then>
                 <else>
                     <dropbox.init>
                         <apiUrl>{$ctx:apiUrl}</apiUrl>
+                        <apiVersion>{$ctx:apiVersion}</apiVersion>
                         <accessToken>{$ctx:accessToken}</accessToken>
                         <path>{$ctx:path}</path>
-                        <root>{$ctx:root}</root>
+                        <blocking>{$ctx:blocking}</blocking>
                     </dropbox.init>
                 </else>
             </filter>
             <switch source="get-property('transport', 'Action')">
-                <case regex="urn:getFile">
-                    <dropbox.getFile>
-                        <rev>{$ctx:rev}</rev>
-                    </dropbox.getFile>
+                <case regex="urn:download">
+                    <dropbox.download/>
                 </case>
                 <case regex="urn:move">
                     <dropbox.move>
                         <fromPath>{$ctx:fromPath}</fromPath>
                         <toPath>{$ctx:toPath}</toPath>
-                        <locale>{$ctx:locale}</locale>
+                        <autoRename>{$ctx:autoRename}</autoRename>
+                        <allowSharedFolder>{$ctx:allowSharedFolder}</allowSharedFolder>
                     </dropbox.move>
                 </case>
                 <case regex="urn:search">
                     <dropbox.search>
                         <query>{$ctx:query}</query>
-                        <locale>{$ctx:locale}</locale>
-                        <fileLimit>{$ctx:fileLimit}</fileLimit>
-                        <includeDeleted>{$ctx:includeDeleted}</includeDeleted>
+                        <start>{$ctx:start}</start>
+                        <maxResults>{$ctx:maxResults}</maxResults>
+                        <mode>{$ctx:mode}</mode>
                     </dropbox.search>
                 </case>
                 <case regex="urn:getMetadata">
                     <dropbox.getMetadata>
-                        <locale>{$ctx:locale}</locale>
-                        <fileLimit>{$ctx:fileLimit}</fileLimit>
-                        <hash>{$ctx:hash}</hash>
-                        <list>{$ctx:list}</list>
                         <includeDeleted>{$ctx:includeDeleted}</includeDeleted>
-                        <rev>{$ctx:rev}</rev>
+                        <includeHasExplicitSharedMembers>{$ctx:includeHasExplicitSharedMembers}</includeHasExplicitSharedMembers>
                         <includeMediaInfo>{$ctx:includeMediaInfo}</includeMediaInfo>
                     </dropbox.getMetadata>
                 </case>
-                <case regex="urn:getRevisionMetadata">
-                    <dropbox.getRevisionMetadata>
-                        <revLimit>{$ctx:revLimit}</revLimit>
-                        <locale>{$ctx:locale}</locale>
-                    </dropbox.getRevisionMetadata>
+                <case regex="urn:listRevisions">
+                    <dropbox.listRevisions>
+                        <limit>{$ctx:limit}</limit>
+                    </dropbox.listRevisions>
                 </case>
                 <case regex="urn:restoreFile">
                     <dropbox.restoreFile>
@@ -111,48 +121,56 @@
                 </case>
                 <case regex="urn:createFolder">
                     <dropbox.createFolder>
-                        <locale>{$ctx:locale}</locale>
+                        <autoRename>{$ctx:autoRename}</autoRename>
                     </dropbox.createFolder>
                 </case>
                 <case regex="urn:copy">
                     <dropbox.copy>
                         <fromPath>{$ctx:fromPath}</fromPath>
                         <toPath>{$ctx:toPath}</toPath>
-                        <locale>{$ctx:locale}</locale>
-                        <fromCopyRef>{$ctx:fromCopyRef}</fromCopyRef>
+                        <allowSharedFolder>{$ctx:allowSharedFolder}</allowSharedFolder>
+                        <autoRename>{$ctx:autoRename}</autoRename>
                     </dropbox.copy>
-                </case>
-                <case regex="urn:share">
-                    <dropbox.share>
-                        <locale>{$ctx:locale}</locale>
-                    </dropbox.share>
-                </case>
-                <case regex="urn:commitChunk">
-                    <dropbox.commitChunk>
-                        <locale>{$ctx:locale}</locale>
-                        <overwrite>{$ctx:overwrite}</overwrite>
-                        <parentRev>{$ctx:parentRev}</parentRev>
-                        <uploadId>{$ctx:uploadId}</uploadId>
-                    </dropbox.commitChunk>
                 </case>
                 <case regex="urn:uploadFile">
                     <dropbox.uploadFile>
-                        <locale>{$url:locale}</locale>
-                        <overwrite>{$url:overwrite}</overwrite>
-                        <parentRev>{$url:parentRev}</parentRev>
-                        <contentLength>{$url:contentLength}</contentLength>
+                        <mode>{$url:mode}</mode>
+                        <autoRename>{$url:autoRename}</autoRename>
+                        <clientModified>{$url:clientModified}</clientModified>
+                        <mute>{$url:mute}</mute>
                     </dropbox.uploadFile>
                 </case>
-                <case regex="urn:chunkUpload">
-                    <dropbox.chunkUpload>
-                        <uploadId>{$url:uploadId}</uploadId>
-                        <offset>{$url:offset}</offset>
-                    </dropbox.chunkUpload>
+                <case regex="urn:getTemporaryLink">
+                    <dropbox.getTemporaryLink/>
                 </case>
-                <case regex="urn:createDirectLink">
-                    <dropbox.createDirectLink>
-                        <locale>{$ctx:locale}</locale>
-                    </dropbox.createDirectLink>
+                <case regex="urn:createSharedLinkWithSettings">
+                    <dropbox.createSharedLinkWithSettings>
+                        <requestedVisibility>{$ctx:requestedVisibility}</requestedVisibility>
+                        <linkPassword>{$ctx:linkPassword}</linkPassword>
+                        <expires>{$ctx:expires}</expires>
+                    </dropbox.createSharedLinkWithSettings>
+                </case>
+                <case regex="urn:startUploadSession">
+                    <dropbox.startUploadSession>
+                        <close>{$url:close}</close>
+                    </dropbox.startUploadSession>
+                </case>
+                <case regex="urn:appendToUploadSession">
+                    <dropbox.appendToUploadSession>
+                        <sessionId>{$url:sessionId}</sessionId>
+                        <offset>{$url:offset}</offset>
+                        <close>{$url:close}</close>
+                    </dropbox.appendToUploadSession>
+                </case>
+                <case regex="urn:finishUploadSession">
+                    <dropbox.finishUploadSession>
+                        <sessionId>{$url:sessionId}</sessionId>
+                        <offset>{$url:offset}</offset>
+                        <mode>{$url:mode}</mode>
+                        <autoRename>{$url:autoRename}</autoRename>
+                        <clientModified>{$url:clientModified}</clientModified>
+                        <mute>{$url:mute}</mute>
+                    </dropbox.finishUploadSession>
                 </case>
             </switch>
             <respond/>
@@ -164,4 +182,3 @@
     </target>
     <description/>
 </proxy>
-                                

@@ -1,7 +1,0 @@
-{
-  "apiUrl": "%s(dropboxApiUrl)",
-  "accessToken": "%s(accessToken)",
-  "root": "%s(autoRoot)",
-  "path": "%s(fileName)",
-  "locale": "fr-FR"
-}

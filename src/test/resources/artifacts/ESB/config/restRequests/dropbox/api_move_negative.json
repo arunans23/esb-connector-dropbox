@@ -1,0 +1,5 @@
+{
+  "from_path": "%s(invalidFolderName)/%s(fileName)",
+  "to_path": "%s(moveTo)/%s(fileName)"
+}
+      

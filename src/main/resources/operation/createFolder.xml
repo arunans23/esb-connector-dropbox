@@ -16,50 +16,60 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<!-- Method Documentation URL: https://www.dropbox.com/developers/core/docs#fileops-create-folder -->
 <template name="createFolder" xmlns="http://ws.apache.org/ns/synapse">
     <!-- Optional parameters -->
-    <parameter name="locale"
-               description="The locale, returned size value field will be translated based on the given locale"/>
+    <parameter name="autoRename"
+               description="If there's a conflict, have the Dropbox server try to autorename the folder to
+               avoid the conflict."/>
     <sequence>
-        <property name="uri.var.locale" expression="$func:locale"/>
+        <property name="uri.var.autoRename" expression="$func:autoRename"  type="BOOLEAN"/>
         <!-- Building payload for mandatory params -->
         <payloadFactory media-type="json">
-            <format>{ "path": "$1" }
+            <format>
+                {
+                    "path" : "$1"
+                }
             </format>
             <args>
-                <arg expression="get-property('uri.var.path')"/>
+                <arg expression="$ctx:uri.var.path"/>
             </args>
         </payloadFactory>
         <script language="js">
-            <![CDATA[
-		    var locale = mc.getProperty("uri.var.locale");
-            var root = mc.getProperty("uri.var.root");
+        <![CDATA[
+            var autoRename = mc.getProperty('uri.var.autoRename');
             payload = mc.getPayloadJSON();
-            if (root != null && root != ""){
-               payload.root = root.toString().substring(1);
-            }     
-		    if(locale!= null && locale != ''){
-		    	payload.locale = locale;
-		    }	
-            mc.setPayloadJSON(payload);    
-			]]>
+            if(autoRename != null && autoRename != ''){
+                payload.autorename = autoRename;
+            }
+            mc.setPayloadJSON(payload);
+        ]]>
         </script>
-        <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
+        <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>
-        <call>
-            <endpoint>
-                <http method="POST" uri-template="{+uri.var.apiUrl}/fileops/create_folder"/>
-            </endpoint>
-        </call>
+        <filter source="$ctx:dropboxBlocking" regex="true">
+            <then>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="POST"
+                              uri-template="{uri.var.apiUrl}/files/create_folder"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="POST"
+                              uri-template="{uri.var.apiUrl}/files/create_folder"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
         <!-- Remove response custom header information -->
         <header name="x-server-response-time" scope="transport" action="remove"/>
         <header name="x-frame-options" scope="transport" action="remove"/>
         <header name="x-dropbox-http-protocol" scope="transport" action="remove"/>
         <header name="x-dropbox-request-id" scope="transport" action="remove"/>
         <header name="set-cookie" scope="transport" action="remove"/>
-        <header name="X-RequestId" scope="transport" action="remove"/>
-        <header name="WWW-Authenticate" scope="transport" action="remove"/>
         <header name="x-content-type-options" scope="transport" action="remove"/>
         <header name="cache-control" scope="transport" action="remove"/>
         <header name="pragma" scope="transport" action="remove"/>

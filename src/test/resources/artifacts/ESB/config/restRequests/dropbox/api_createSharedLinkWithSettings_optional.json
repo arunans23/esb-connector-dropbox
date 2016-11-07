@@ -1,0 +1,6 @@
+{
+  "path": "%s(folderName1)/%s(fileName)",
+  "settings": {
+    "requested_visibility": "public"
+  }
+}

@@ -16,62 +16,73 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<!-- Method Documentation URL: https://www.dropbox.com/developers/core/docs#fileops-move -->
 <template name="move" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="fromPath"
-               description="The from_path is required Specifies the file or folder to be moved from relative to root."/>
+               description="The from_path is required Specifies the file or folder to be moved from."/>
     <parameter name="toPath"
-               description="The to_path is required Specifies the destination path, including the new name for the file or folder, relative to root."/>
-    <parameter name="locale"
-               description="The locale is the metadata returned will have its size field translated based on the given locale. "/>
+               description="The to_path is required Specifies the destination path, including the new name for the file or folder."/>
+    <parameter name="allowSharedFolder"
+               description="If true, copy will copy contents in shared folder."/>
+    <parameter name="autoRename"
+               description="If there's a conflict, have the Dropbox server try to autoRename the file to avoid the conflict."/>
     <sequence>
         <property name="uri.var.fromPath" expression="$func:fromPath"/>
         <property name="uri.var.toPath" expression="$func:toPath"/>
-        <property name="uri.var.locale" expression="$func:locale"/>
-        <property name="uri.var.urlQuery" value=""/>
+        <property name="uri.var.allowSharedFolder" expression="$func:allowSharedFolder"  type="BOOLEAN"/>
+        <property name="uri.var.autoRename" expression="$func:autoRename"  type="BOOLEAN"/>
+        <!-- Building payload for mandatory params -->
+        <payloadFactory media-type="json">
+            <format>
+                {
+                    "to_path" : "$1",
+                    "from_path" : "$2"
+                }
+            </format>
+            <args>
+                <arg expression="$ctx:uri.var.toPath"/>
+                <arg expression="$ctx:uri.var.fromPath"/>
+            </args>
+        </payloadFactory>
         <script language="js">
-            <![CDATA[
-        	//encoding url param variables 
-            var fromPath = mc.getProperty("uri.var.fromPath");
-            var toPath = mc.getProperty("uri.var.toPath"); 
-            var locale = mc.getProperty("uri.var.locale");
-            var root = mc.getProperty("uri.var.root"); 
-            var urlQuery = "";
-            // query is a mandatory parameter                                                                                                                                                         
-            if (fromPath!=null && fromPath!= ""){
-               urlQuery+='from_path='+ fromPath +'&';
+        <![CDATA[
+            var allowSharedFolder = mc.getProperty('uri.var.allowSharedFolder');
+            var autoRename = mc.getProperty('uri.var.autoRename');
+            payload = mc.getPayloadJSON();
+            if(allowSharedFolder != null && allowSharedFolder != ''){
+                payload.allow_shared_folder = allowSharedFolder;
             }
-            if (toPath!=null && toPath!= ""){
-               urlQuery+='to_path='+ toPath +'&';
+            if(autoRename != null && autoRename != ''){
+                payload.autorename = autoRename;
             }
-            if (root!=null && root!= ""){
-               urlQuery+='root='+ root.substring(1) +'&';
-            }    
-	        //encoding optional url param variables 			
-            if (locale!=null && locale!= ""){
-               urlQuery+='locale='+ locale +'&';
-            }
-            if(urlQuery.length!=1){
-		       urlQuery='?'+urlQuery.toString().substring(0,urlQuery.toString().lastIndexOf("&"))
-		       mc.setProperty('uri.var.urlQuery', urlQuery);                               
-            }              	                                                                                                                                                                                            
-         ]]>
+            mc.setPayloadJSON(payload);
+        ]]>
         </script>
+        <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>
-        <call>
-            <endpoint>
-                <http method="post"
-                      uri-template="{+uri.var.apiUrl}/fileops/move{+uri.var.urlQuery}"/>
-            </endpoint>
-        </call>
+        <filter source="$ctx:dropboxBlocking" regex="true">
+            <then>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{+uri.var.apiUrl}/files/move"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{+uri.var.apiUrl}/files/move"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
         <!-- Remove response custom header information -->
         <header name="x-server-response-time" scope="transport" action="remove"/>
         <header name="x-frame-options" scope="transport" action="remove"/>
         <header name="x-dropbox-http-protocol" scope="transport" action="remove"/>
         <header name="x-dropbox-request-id" scope="transport" action="remove"/>
-        <header name="X-RequestId" scope="transport" action="remove"/>
         <header name="set-cookie" scope="transport" action="remove"/>
-        <header name="WWW-Authenticate" scope="transport" action="remove"/>
         <header name="x-content-type-options" scope="transport" action="remove"/>
         <header name="cache-control" scope="transport" action="remove"/>
         <header name="pragma" scope="transport" action="remove"/>

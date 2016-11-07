@@ -22,9 +22,9 @@
             <file>getMetadata.xml</file>
             <description>Retrieves file and folder metadata</description>
         </component>
-        <component name="getRevisionMetadata">
-            <file>getRevisionMetadata.xml</file>
-            <description>Obtains metadata for the previous revisions of a file.</description>
+        <component name="listRevisions">
+            <file>listRevisions.xml</file>
+            <description>Returns revisions of a file.</description>
         </component>
         <component name="search">
             <file>search.xml</file>

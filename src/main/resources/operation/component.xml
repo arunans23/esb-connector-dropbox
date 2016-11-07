@@ -22,9 +22,9 @@
             <file>copy.xml</file>
             <description>Copies a file or folder to a new location.</description>
         </component>
-        <component name="getFile">
-            <file>getFile.xml</file>
-            <description>Get file from dropbox.</description>
+        <component name="download">
+            <file>download.xml</file>
+            <description>Downloads a file from a user's Dropbox.</description>
         </component>
         <component name="createFolder">
             <file>createFolder.xml</file>
@@ -32,35 +32,39 @@
         </component>
         <component name="delete">
             <file>delete.xml</file>
-            <description>Delete folder.</description>
+            <description>Deletes a file or folder.</description>
         </component>
         <component name="move">
             <file>move.xml</file>
             <description>Moves a file or folder to a new location.</description>
         </component>
-        <component name="chunkUpload">
-            <file>chunkUpload.xml</file>
-            <description>Uploads large files to Dropbox in multiple chunks.</description>
-        </component>
-        <component name="commitChunk">
-            <file>commitChunk.xml</file>
-            <description>Completes an upload.</description>
-        </component>
         <component name="restoreFile">
             <file>restoreFile.xml</file>
             <description>Restores a file path to a previous revision.</description>
         </component>
-        <component name="share">
-            <file>share.xml</file>
-            <description>Returns a link directly to a file.</description>
+        <component name="getTemporaryLink">
+            <file>getTemporaryLink.xml</file>
+            <description>Get a temporary link to stream content of a file.</description>
+        </component>
+        <component name="createSharedLinkWithSettings">
+            <file>createSharedLinkWithSettings.xml</file>
+            <description>Creates a shared link with custom settings.</description>
         </component>
         <component name="uploadFile">
             <file>uploadFile.xml</file>
             <description>Upload file to dropbox.</description>
         </component>
-        <component name="createDirectLink">
-            <file>createDirectLink.xml</file>
-            <description>Returns a link directly to a file.</description>
+        <component name="startUploadSession">
+            <file>startUploadSession.xml</file>
+            <description>Upload file to dropbox.</description>
+        </component>
+        <component name="appendToUploadSession">
+            <file>appendToUploadSession.xml</file>
+            <description>Append more data to an upload session.</description>
+        </component>
+        <component name="finishUploadSession">
+            <file>finishUploadSession.xml</file>
+            <description>Finish an upload session and save the uploaded data to the given file path.</description>
         </component>
     </subComponents>
 </component>

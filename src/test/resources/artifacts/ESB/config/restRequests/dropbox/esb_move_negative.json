@@ -1,7 +1,7 @@
 {
   "apiUrl": "%s(dropboxApiUrl)",
+  "apiVersion":"%s(apiVersion)",
   "accessToken": "%s(accessToken)",
-  "root": "dropbox",
-  "fromPath": "invalid",
-  "toPath": "x"
+  "fromPath": "%s(invalidFolderName)/%s(fileName)",
+  "toPath": "%s(moveTo)/%s(fileName)"
 }

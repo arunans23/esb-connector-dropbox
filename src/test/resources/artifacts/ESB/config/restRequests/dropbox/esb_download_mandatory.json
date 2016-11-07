@@ -1,0 +1,6 @@
+{
+  "apiUrl": "%s(contentApiUrl)",
+  "apiVersion":"%s(apiVersion)",
+  "accessToken": "%s(accessToken)",
+  "path": "%s(folderName1)/%s(fileName)"
+}	
