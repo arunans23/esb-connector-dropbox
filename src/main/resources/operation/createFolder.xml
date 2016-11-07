@@ -35,14 +35,14 @@
             </args>
         </payloadFactory>
         <script language="js">
-            <![CDATA[
-	  		var autoRename = mc.getProperty('uri.var.autoRename');
-	  		payload = mc.getPayloadJSON();
-		    if(autoRename != null && autoRename != ''){
-		    	payload.autorename = autoRename;
-		    }
-		    mc.setPayloadJSON(payload);
-			]]>
+        <![CDATA[
+            var autoRename = mc.getProperty('uri.var.autoRename');
+            payload = mc.getPayloadJSON();
+            if(autoRename != null && autoRename != ''){
+                payload.autorename = autoRename;
+            }
+            mc.setPayloadJSON(payload);
+        ]]>
         </script>
         <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>

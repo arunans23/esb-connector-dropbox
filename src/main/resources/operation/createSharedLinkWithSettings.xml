@@ -45,20 +45,20 @@
         </payloadFactory>
         <script language="js">
         <![CDATA[
-	  		var requestedVisibility = mc.getProperty('uri.var.requestedVisibility');
-	  		var linkPassword = mc.getProperty('uri.var.linkPassword');
-	  		var expires = mc.getProperty('uri.var.expires');
-	  		payload = mc.getPayloadJSON();
-		    if(requestedVisibility == null || requestedVisibility == ''){
-		    	delete payload.settings.requested_visibility;
-		    }
-		    if(linkPassword == null || linkPassword == ''){
-		    	delete payload.settings.link_password;
-		    }
-		    if(expires == null || expires == ''){
-		    	delete payload.settings.expires;
-		    }
-		    mc.setPayloadJSON(payload);
+            var requestedVisibility = mc.getProperty('uri.var.requestedVisibility');
+            var linkPassword = mc.getProperty('uri.var.linkPassword');
+            var expires = mc.getProperty('uri.var.expires');
+            payload = mc.getPayloadJSON();
+            if(requestedVisibility == null || requestedVisibility == ''){
+                delete payload.settings.requested_visibility;
+            }
+            if(linkPassword == null || linkPassword == ''){
+                delete payload.settings.link_password;
+            }
+            if(expires == null || expires == ''){
+                delete payload.settings.expires;
+            }
+            mc.setPayloadJSON(payload);
         ]]>
         </script>
         <property name="messageType" value="application/json" scope="axis2"/>

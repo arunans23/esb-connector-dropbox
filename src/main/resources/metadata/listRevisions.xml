@@ -21,7 +21,7 @@
     <sequence class="sequence">
         <property name="uri.var.limit" expression="$func:limit"/>
         <script language="js">
-            <![CDATA[
+        <![CDATA[
 		    var limit = mc.getProperty("uri.var.limit");
             var path = mc.getProperty("uri.var.path");
             var apiArgs = '{';
@@ -31,7 +31,7 @@
 		    }
 		    apiArgs = apiArgs.concat('}');
 		    mc.setProperty("uri.var.apiArgs", apiArgs);
-			]]>
+        ]]>
         </script>
         <payloadFactory media-type="json">
             <format>

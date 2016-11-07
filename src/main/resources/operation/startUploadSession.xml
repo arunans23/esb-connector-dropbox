@@ -23,7 +23,7 @@
     <sequence>
         <property name="uri.var.close" expression="$func:close"/>
         <script language="js">
-            <![CDATA[
+        <![CDATA[
             var close = mc.getProperty("uri.var.close");
             var apiArgs = '';
             if (close!=null && close!= "") {

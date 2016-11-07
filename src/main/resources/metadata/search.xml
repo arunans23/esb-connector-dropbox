@@ -27,7 +27,7 @@
         <property name="uri.var.maxResults" expression="$func:maxResults"/>
         <property name="uri.var.mode" expression="$func:mode"/>
         <script language="js">
-            <![CDATA[
+        <![CDATA[
 		    var query = mc.getProperty("uri.var.query");
 		    var start = mc.getProperty("uri.var.start");
 		    var maxResults = mc.getProperty("uri.var.maxResults");
@@ -49,7 +49,7 @@
 		    }
 		    apiArgs = apiArgs.concat('}');
 		    mc.setProperty("uri.var.apiArgs", apiArgs);
-			]]>
+        ]]>
         </script>
         <payloadFactory media-type="json">
             <format>

@@ -76,7 +76,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for createFolder method with optional parameters.
      */
-    @Test(priority = 2, dependsOnMethods = {"testCreateFolderWithMandatoryParameters"}, description = "dropbox {createFolder} integration test with optional parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testCreateFolderWithMandatoryParameters"},
+            description = "dropbox {createFolder} integration test with optional parameters.")
     public void testCreateFolderWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createFolder");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -96,7 +97,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * Negative test case for createFolder method. Negative scenario is checked by trying to create already
      * existing folder created by testCreateFolderWithMandatoryParameters method
      */
-    @Test(priority = 2, dependsOnMethods = {"testCreateFolderWithOptionalParameters"}, description = "dropbox {createFolder} integration test with negative case.")
+    @Test(priority = 2, dependsOnMethods = {"testCreateFolderWithOptionalParameters"},
+            description = "dropbox {createFolder} integration test with negative case.")
     public void testCreateFolderWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createFolder");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -110,7 +112,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      *
      * @throws NoSuchAlgorithmException
      */
-    @Test(priority = 1, dependsOnMethods = {"testCreateFolderWithNegativeCase"}, description = "dropbox {uploadFile} integration test positive case.")
+    @Test(priority = 1, dependsOnMethods = {"testCreateFolderWithNegativeCase"},
+            description = "dropbox {uploadFile} integration test positive case.")
     public void testUploadFile() throws IOException, JSONException, NoSuchAlgorithmException {
         headersMap.put("Action", "urn:uploadFile");
         headersMap.put("Content-Type", "application/octet-stream");
@@ -136,7 +139,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testUploadFile"}, description = "dropbox {getTemporaryLink} integration test with mandatory parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testUploadFile"},
+            description = "dropbox {getTemporaryLink} integration test with mandatory parameters.")
     public void testGetTemporaryLinkWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getTemporaryLink");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -148,7 +152,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Negative test case for getTemporaryLink method.
      */
-    @Test(priority = 2, dependsOnMethods = {"testGetTemporaryLinkWithMandatoryParameters"}, description = "dropbox {getTemporaryLink} integration test with negative case.")
+    @Test(priority = 2, dependsOnMethods = {"testGetTemporaryLinkWithMandatoryParameters"},
+            description = "dropbox {getTemporaryLink} integration test with negative case.")
     public void testGetTemporaryLinkWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getTemporaryLink");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -163,7 +168,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testUploadFile"}, description = "dropbox {copy} integration test with mandatory parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testUploadFile"},
+            description = "dropbox {copy} integration test with mandatory parameters.")
     public void testCopyWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:copy");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -183,7 +189,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testCopyWithMandatoryParameters"}, description = "dropbox {copy} integration test with optional parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testCopyWithMandatoryParameters"},
+            description = "dropbox {copy} integration test with optional parameters.")
     public void testCopyWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:copy");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -202,7 +209,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * Negative test case for copy method. Negative scenario is checked by trying to copy a file or folder to
      * a place which tries to override an existing file or folder
      */
-    @Test(priority = 2, dependsOnMethods = {"testCopyWithOptionalParameters"}, description = "dropbox {copy} integration test with negative case.")
+    @Test(priority = 2, dependsOnMethods = {"testCopyWithOptionalParameters"},
+            description = "dropbox {copy} integration test with negative case.")
     public void testCopyWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:copy");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -214,7 +222,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for getMetadata method with mandatory parameters.
      */
-    @Test(priority = 1, dependsOnMethods = {"testUploadFile"}, description = "dropbox {getMetadata} integration test with mandatory parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testUploadFile"},
+            description = "dropbox {getMetadata} integration test with mandatory parameters.")
     public void testGetMetadataWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getMetadata");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -229,7 +238,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for getMetadata method with optional parameters.
      */
-    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithMandatoryParameters"}, description = "dropbox {getMetadata} integration test with optional parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithMandatoryParameters"},
+            description = "dropbox {getMetadata} integration test with optional parameters.")
     public void testGetMetadataWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getMetadata");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -245,7 +255,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Negative test case for getMetadata method.
      */
-    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithOptionalParameters"}, description = "dropbox {getMetadata} integration test negative case.")
+    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithOptionalParameters"},
+            description = "dropbox {getMetadata} integration test negative case.")
     public void testGetMetadataWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getMetadata");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -262,7 +273,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithNegativeCase"}, description = "dropbox {createSharedLinkWithSettings} integration test with mandatory parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testGetMetadataWithNegativeCase"},
+            description = "dropbox {createSharedLinkWithSettings} integration test with mandatory parameters.")
     public void testCreateDirectLinkWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createSharedLinkWithSettings");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -285,7 +297,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithMandatoryParameters"}, description = "dropbox {createSharedLinkWithSettings} integration test with optional parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithMandatoryParameters"},
+            description = "dropbox {createSharedLinkWithSettings} integration test with optional parameters.")
     public void testCreateDirectLinkWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createSharedLinkWithSettings");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -305,7 +318,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithOptionalParameters"}, description = "dropbox {createSharedLinkWithSettings} integration test with negative parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithOptionalParameters"},
+            description = "dropbox {createSharedLinkWithSettings} integration test with negative parameters.")
     public void testCreateDirectLinkWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createSharedLinkWithSettings");
         RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
@@ -317,7 +331,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for listRevisions method with mandatory parameters.
      */
-    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithMandatoryParameters"}, description = "dropbox {listRevisions} integration test with mandatory parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testCreateDirectLinkWithMandatoryParameters"},
+            description = "dropbox {listRevisions} integration test with mandatory parameters.")
     public void testListRevisionsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listRevisions");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/list_revisions";
@@ -331,7 +346,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for listRevisions method with optional parameters.
      */
-    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithMandatoryParameters"}, description = "dropbox {listRevisions} integration test with optional parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithMandatoryParameters"},
+            description = "dropbox {listRevisions} integration test with optional parameters.")
     public void testListRevisionsWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listRevisions");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/list_revisions";
@@ -345,7 +361,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Negative test case for listRevisions method.
      */
-    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithOptionalParameters"}, description = "dropbox {listRevisions} integration test with negative case.")
+    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithOptionalParameters"},
+            description = "dropbox {listRevisions} integration test with negative case.")
     public void testListRevisionsWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listRevisions");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/list_revisions";
@@ -363,7 +380,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithOptionalParameters"}, description = "dropbox {search} integration test with mandatory parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testListRevisionsWithOptionalParameters"},
+            description = "dropbox {search} integration test with mandatory parameters.")
     public void testSearchWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:search");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/search";
@@ -380,7 +398,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, dependsOnMethods = {"testSearchWithMandatoryParameters"}, description = "dropbox {search} integration test with optional parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testSearchWithMandatoryParameters"},
+            description = "dropbox {search} integration test with optional parameters.")
     public void testSearchWithOptionalParameters() throws IOException, JSONException {
 
         esbRequestHeadersMap.put("Action", "urn:search");
@@ -399,7 +418,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 1, groups = {"wso2.esb"}, dependsOnMethods = {"testSearchWithOptionalParameters"}, description = "dropbox {search} integration test negative case.")
+    @Test(priority = 1, groups = {"wso2.esb"}, dependsOnMethods = {"testSearchWithOptionalParameters"},
+            description = "dropbox {search} integration test negative case.")
     public void testSearchWithNegativeCase() throws IOException, JSONException {
 
         esbRequestHeadersMap.put("Action", "urn:search");
@@ -418,7 +438,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testSearchWithOptionalParameters"}, description = "dropbox {move} integration test with mandatory parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testSearchWithOptionalParameters"},
+            description = "dropbox {move} integration test with mandatory parameters.")
     public void testMoveWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:move");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -436,7 +457,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testMoveWithMandatoryParameters"}, description = "dropbox {move} integration test with optional parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testMoveWithMandatoryParameters"},
+            description = "dropbox {move} integration test with optional parameters.")
     public void testMoveWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:move");
         String apiEndPoint =
@@ -455,7 +477,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
      * @throws JSONException
      * @throws IOException
      */
-    @Test(priority = 2, dependsOnMethods = {"testMoveWithOptionalParameters"}, description = "dropbox {move} integration test negative case.")
+    @Test(priority = 2, dependsOnMethods = {"testMoveWithOptionalParameters"},
+            description = "dropbox {move} integration test negative case.")
     public void testMoveNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:move");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/move";
@@ -470,7 +493,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for delete method with mandatory parameters.
      */
-    @Test(priority = 2, dependsOnMethods = {"testMoveWithOptionalParameters"}, description = "dropbox {delete} integration test with mandatory parameters.")
+    @Test(priority = 2, dependsOnMethods = {"testMoveWithOptionalParameters"},
+            description = "dropbox {delete} integration test with mandatory parameters.")
     public void testDeleteWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:delete");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -488,7 +512,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Negative test case for delete method.
      */
-    @Test(priority = 2, dependsOnMethods = {"testDeleteWithMandatoryParameters"}, description = "dropbox {delete} integration test with negative case.")
+    @Test(priority = 2, dependsOnMethods = {"testDeleteWithMandatoryParameters"},
+            description = "dropbox {delete} integration test with negative case.")
     public void testDeleteWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:delete");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/delete";
@@ -504,7 +529,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Positive test case for restoreFile method with mandatory parameters.
      */
-    @Test(priority = 1, dependsOnMethods = {"testDeleteWithMandatoryParameters"}, description = "dropbox {restoreFile} integration test with mandatory parameters.")
+    @Test(priority = 1, dependsOnMethods = {"testDeleteWithMandatoryParameters"},
+            description = "dropbox {restoreFile} integration test with mandatory parameters.")
     public void testRestoreFileWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:restoreFile");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/get_metadata";
@@ -519,7 +545,8 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     /**
      * Negative test case for restoreFile method.
      */
-    @Test(priority = 1, dependsOnMethods = {"testRestoreFileWithMandatoryParameters"}, description = "dropbox {restoreFile} integration test negative case.")
+    @Test(priority = 1, dependsOnMethods = {"testRestoreFileWithMandatoryParameters"},
+            description = "dropbox {restoreFile} integration test negative case.")
     public void testRestoreFileWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:restoreFile");
         String apiEndPoint = connectorProperties.getProperty("dropboxApiUrl") + "/2/files/restore";

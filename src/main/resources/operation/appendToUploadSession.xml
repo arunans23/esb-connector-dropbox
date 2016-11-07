@@ -27,7 +27,7 @@
         <property name="uri.var.offset" expression="$func:offset"/>
         <property name="uri.var.close" expression="$func:close"/>
         <script language="js">
-            <![CDATA[
+        <![CDATA[
             var sessionId = mc.getProperty("uri.var.sessionId");
             var offset = mc.getProperty("uri.var.offset");
             var close = mc.getProperty("uri.var.close");

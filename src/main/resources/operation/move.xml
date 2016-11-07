@@ -44,18 +44,18 @@
             </args>
         </payloadFactory>
         <script language="js">
-            <![CDATA[
-		    var allowSharedFolder = mc.getProperty('uri.var.allowSharedFolder');
-	  		var autoRename = mc.getProperty('uri.var.autoRename');
-	  		payload = mc.getPayloadJSON();
-		    if(allowSharedFolder != null && allowSharedFolder != ''){
-		    	payload.allow_shared_folder = allowSharedFolder;
-		    }
-		    if(autoRename != null && autoRename != ''){
-		    	payload.autorename = autoRename;
-		    }
-		    mc.setPayloadJSON(payload);
-			]]>
+        <![CDATA[
+            var allowSharedFolder = mc.getProperty('uri.var.allowSharedFolder');
+            var autoRename = mc.getProperty('uri.var.autoRename');
+            payload = mc.getPayloadJSON();
+            if(allowSharedFolder != null && allowSharedFolder != ''){
+                payload.allow_shared_folder = allowSharedFolder;
+            }
+            if(autoRename != null && autoRename != ''){
+                payload.autorename = autoRename;
+            }
+            mc.setPayloadJSON(payload);
+        ]]>
         </script>
         <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>

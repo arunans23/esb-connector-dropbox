@@ -23,8 +23,7 @@
     <parameter name="fromPath" description="file or folder to be copied from."/>
     <!-- Optional parameters -->
     <parameter name="allowSharedFolder" description="If true, copy will copy contents in shared folder."/>
-    <parameter name="autoRename"
-               description="If there's a conflict, have the Dropbox server try to
+    <parameter name="autoRename" description="If there's a conflict, have the Dropbox server try to
                autorename the file to avoid the conflict."/>
     <sequence>
         <property name="uri.var.fromPath" expression="$func:fromPath"/>
@@ -45,7 +44,7 @@
             </args>
         </payloadFactory>
         <script language="js">
-            <![CDATA[
+        <![CDATA[
 		    var allowSharedFolder = mc.getProperty('uri.var.allowSharedFolder');
 	  		var autoRename = mc.getProperty('uri.var.autoRename');
 	  		payload = mc.getPayloadJSON();
@@ -56,7 +55,7 @@
 		    	payload.autorename = autoRename;
 		    }
 		    mc.setPayloadJSON(payload);
-			]]>
+        ]]>
         </script>
         <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>

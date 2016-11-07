@@ -18,9 +18,8 @@
 -->
 <template name="getMetadata" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="includeDeleted" description="Only applicable when list is set."/>
-    <parameter name="includeHasExplicitSharedMembers"
-               description="If true, the results will include a flag for each file indicating whether or not that file
-                has any explicit members."/>
+    <parameter name="includeHasExplicitSharedMembers" description="If true, the results will include a flag for
+                     each file indicating whether or not that file has any explicit members."/>
     <parameter name="includeMediaInfo" description="If true will return media info."/>
     <sequence class="sequence">
         <property name="uri.var.includeDeleted" expression="$func:includeDeleted"/>
@@ -37,22 +36,22 @@
             </args>
         </payloadFactory>
         <script language="js">
-            <![CDATA[
-	  		var includeDeleted = mc.getProperty('uri.var.includeDeleted');
-	  		var includeMediaInfo = mc.getProperty('uri.var.includeMediaInfo');
-	  		var includeHasExplicitSharedMembers = mc.getProperty('uri.var.includeHasExplicitSharedMembers');
-	  		payload = mc.getPayloadJSON();
-		    if(includeDeleted != null && includeDeleted != ''){
-		    	payload.include_deleted = includeDeleted;
-		    }
-		    if(includeMediaInfo != null && includeMediaInfo != ''){
-		    	payload.include_media_info = includeMediaInfo;
-		    }
-		    if(includeHasExplicitSharedMembers != null && includeHasExplicitSharedMembers != ''){
-		    	payload.include_has_explicit_shared_members = includeHasExplicitSharedMembers;
-		    }
-		    mc.setPayloadJSON(payload);
-			]]>
+        <![CDATA[
+            var includeDeleted = mc.getProperty('uri.var.includeDeleted');
+            var includeMediaInfo = mc.getProperty('uri.var.includeMediaInfo');
+            var includeHasExplicitSharedMembers = mc.getProperty('uri.var.includeHasExplicitSharedMembers');
+            payload = mc.getPayloadJSON();
+            if(includeDeleted != null && includeDeleted != ''){
+                payload.include_deleted = includeDeleted;
+            }
+            if(includeMediaInfo != null && includeMediaInfo != ''){
+                payload.include_media_info = includeMediaInfo;
+            }
+            if(includeHasExplicitSharedMembers != null && includeHasExplicitSharedMembers != ''){
+                payload.include_has_explicit_shared_members = includeHasExplicitSharedMembers;
+            }
+            mc.setPayloadJSON(payload);
+        ]]>
         </script>
         <property name="messageType" value="application/json" scope="axis2"/>
         <property action="remove" name="Accept-Encoding" scope="transport"/>

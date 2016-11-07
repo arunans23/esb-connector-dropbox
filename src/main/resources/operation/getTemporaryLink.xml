@@ -18,7 +18,6 @@
 -->
 <template name="getTemporaryLink" xmlns="http://ws.apache.org/ns/synapse">
     <sequence>
-        <property name="uri.var.autorename" expression="$func:autorename"  type="BOOLEAN"/>
         <!-- Building payload for mandatory params -->
         <payloadFactory media-type="json">
             <format>
