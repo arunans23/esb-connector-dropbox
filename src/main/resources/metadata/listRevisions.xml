@@ -26,11 +26,11 @@
             var path = mc.getProperty("uri.var.path");
             var apiArgs = '{';
             apiArgs = apiArgs.concat('"'+'path":"' + path+'"');
-		    if (limit!=null && limit!= "") {
-		        apiArgs = apiArgs.concat(',"'+'limit":' + limit);
-		    }
-		    apiArgs = apiArgs.concat('}');
-		    mc.setProperty("uri.var.apiArgs", apiArgs);
+            if (limit!=null && limit!= "") {
+                apiArgs = apiArgs.concat(',"'+'limit":' + limit);
+            }
+            apiArgs = apiArgs.concat('}');
+            mc.setProperty("uri.var.apiArgs", apiArgs);
         ]]>
         </script>
         <payloadFactory media-type="json">
