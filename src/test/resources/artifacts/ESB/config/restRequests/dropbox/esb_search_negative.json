@@ -1,8 +1,7 @@
 {
   "apiUrl": "%s(dropboxApiUrl)",
   "accessToken": "%s(accessToken)",
-  "query": "a",
-  "root": "dropbox",
-  "path": "",
-  "fileLimit": "a"
+  "apiVersion":"%s(apiVersion)",
+  "path": "%s(invalidFolderName)",
+  "query": "%s(query)"
 }

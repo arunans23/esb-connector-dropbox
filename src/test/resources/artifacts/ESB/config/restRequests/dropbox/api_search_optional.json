@@ -1,0 +1,6 @@
+{
+  "path": "%s(folderName1)",
+  "query": "%s(query)",
+  "start": %s(start),
+  "mode": "%s(searchMode)"
+}

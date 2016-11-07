@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~  WSO2 Inc. licenses this file to you under the Apache License,
+ ~  Version 2.0 (the "License"); you may not use this file except
+ ~  in compliance with the License.
+ ~  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~  Unless required by applicable law or agreed to in writing,
+ ~  software distributed under the License is distributed on an
+ ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~  KIND, either express or implied.  See the License for the
+ ~  specific language governing permissions and limitations
+ ~  under the License.
+-->
+<!-- Method Documentation URL: https://www.dropbox.com/developers/documentation/http/documentation#files-upload -->
+<template name="finishUploadSession" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="sessionId" description="The upload session ID."/>
+    <parameter name="offset" description="The amount of data that has been uploaded so far."/>
+    <parameter name="mode"
+               description="Selects what to do if the file already exists."/>
+    <parameter name="autoRename"
+               description="If there's a conflict, as determined by mode, have the Dropbox server try to autoRename the file to avoid conflict."/>
+    <parameter name="clientModified"
+               description="The value to store as the client_modified timestamp."/>
+    <parameter name="mute"
+               description="If true, this tells the clients that this modification shouldn't result in a user notification."/>
+    <parameter name="close" description="If true, the current session will be closed, at which point you won't be
+                                able to call upload_session/append_v2 anymore with the current session."/>
+    <sequence>
+        <property name="uri.var.sessionId" expression="$func:sessionId"/>
+        <property name="uri.var.offset" expression="$func:offset"/>
+        <property name="uri.var.mode" expression="$func:mode"/>
+        <property name="uri.var.autoRename" expression="$func:autoRename"/>
+        <property name="uri.var.clientModified" expression="$func:clientModified"/>
+        <property name="uri.var.mute" expression="$func:mute"/>
+        <property name="uri.var.close" expression="$func:close"/>
+        <script language="js">
+            <![CDATA[
+            var sessionId = mc.getProperty("uri.var.sessionId");
+            var offset = mc.getProperty("uri.var.offset");
+            var mode = mc.getProperty("uri.var.mode");
+            var autoRename = mc.getProperty("uri.var.autoRename");
+            var clientModified = mc.getProperty("uri.var.clientModified");
+            var mute = mc.getProperty("uri.var.mute");
+            var path = mc.getProperty("uri.var.path");
+            var close = mc.getProperty("uri.var.close");
+            var apiArgs = '{"cursor":{';
+            apiArgs = apiArgs.concat('"session_id":"' + sessionId+'","'+'offset":' + offset+'}');
+            apiArgs = apiArgs.concat(',"commit":{"path":"' + path+'"');
+            if (mode!=null && mode!= "") {
+                apiArgs = apiArgs.concat(',"'+'mode":"' + mode+'"');
+            }
+            if (autoRename!=null && autoRename!= "") {
+                apiArgs = apiArgs.concat(',"'+'autorename":' + autoRename);
+            }
+            if (clientModified!=null && clientModified!= "") {
+                apiArgs = apiArgs.concat(',"'+'client_modified":"' + clientModified+'"');
+            }
+            if (mute!=null && mute!= "") {
+                apiArgs = apiArgs.concat(',"'+'mute":' + mute);
+            }
+            apiArgs = apiArgs.concat('}');
+            if (close!=null && close!= "") {
+                apiArgs = apiArgs.concat(',"'+'close":' + close);
+            }
+            apiArgs = apiArgs.concat('}');
+            mc.setProperty("uri.var.apiArgs", apiArgs);
+        ]]>
+        </script>
+        <header name="Dropbox-API-Arg" expression="$ctx:uri.var.apiArgs" scope="transport" type="STRING"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
+        <property name="messageType" value="application/octet-stream" scope="axis2"/>
+        <filter source="$ctx:dropboxBlocking" regex="true">
+            <then>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{+uri.var.apiUrl}/files/upload_session/append_v2"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{+uri.var.apiUrl}/files/upload_session/append_v2"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+        <!-- Remove response custom header information -->
+        <header name="x-server-response-time" scope="transport" action="remove"/>
+        <header name="x-frame-options" scope="transport" action="remove"/>
+        <header name="x-dropbox-http-protocol" scope="transport" action="remove"/>
+        <header name="x-dropbox-request-id" scope="transport" action="remove"/>
+        <header name="set-cookie" scope="transport" action="remove"/>
+        <header name="x-content-type-options" scope="transport" action="remove"/>
+        <header name="cache-control" scope="transport" action="remove"/>
+        <header name="pragma" scope="transport" action="remove"/>
+    </sequence>
+</template>

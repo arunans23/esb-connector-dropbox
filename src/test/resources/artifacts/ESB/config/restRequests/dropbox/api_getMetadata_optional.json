@@ -1,0 +1,4 @@
+{
+  "path": "%s(folderName1)/%s(fileName)",
+  "include_deleted": true
+}

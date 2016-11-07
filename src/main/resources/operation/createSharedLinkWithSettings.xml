@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~  WSO2 Inc. licenses this file to you under the Apache License,
+ ~  Version 2.0 (the "License"); you may not use this file except
+ ~  in compliance with the License.
+ ~  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~  Unless required by applicable law or agreed to in writing,
+ ~  software distributed under the License is distributed on an
+ ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~  KIND, either express or implied.  See the License for the
+ ~  specific language governing permissions and limitations
+ ~  under the License.
+-->
+<template name="createSharedLinkWithSettings" xmlns="http://ws.apache.org/ns/synapse">
+    <!-- Optional parameters -->
+    <parameter name="requestedVisibility" description="The requested access for this shared link."/>
+    <parameter name="linkPassword" description="Password to access the link."/>
+    <parameter name="expires" description="Expiration time of the shared link."/>
+    <sequence>
+        <property name="uri.var.requestedVisibility" expression="$func:requestedVisibility"/>
+        <property name="uri.var.linkPassword" expression="$func:linkPassword"/>
+        <property name="uri.var.expires" expression="$func:expires"/>
+        <payloadFactory media-type="json">
+            <format>
+                {
+                    "path" : "$1",
+                    "settings": {
+                        "requested_visibility": "$2",
+                        "link_password" : "$3",
+                        "expires" : "$4"
+                    }
+                }
+            </format>
+            <args>
+                <arg expression="$ctx:uri.var.path"/>
+                <arg expression="$ctx:uri.var.requestedVisibility"/>
+                <arg expression="$ctx:uri.var.linkPassword"/>
+                <arg expression="$ctx:uri.var.expires"/>
+            </args>
+        </payloadFactory>
+        <script language="js">
+        <![CDATA[
+	  		var requestedVisibility = mc.getProperty('uri.var.requestedVisibility');
+	  		var linkPassword = mc.getProperty('uri.var.linkPassword');
+	  		var expires = mc.getProperty('uri.var.expires');
+	  		payload = mc.getPayloadJSON();
+		    if(requestedVisibility == null || requestedVisibility == ''){
+		    	delete payload.settings.requested_visibility;
+		    }
+		    if(linkPassword == null || linkPassword == ''){
+		    	delete payload.settings.link_password;
+		    }
+		    if(expires == null || expires == ''){
+		    	delete payload.settings.expires;
+		    }
+		    mc.setPayloadJSON(payload);
+        ]]>
+        </script>
+        <property name="messageType" value="application/json" scope="axis2"/>
+        <property action="remove" name="Accept-Encoding" scope="transport"/>
+        <filter source="$ctx:dropboxBlocking" regex="true">
+            <then>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="POST"
+                              uri-template="{uri.var.apiUrl}/sharing/create_shared_link_with_settings"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="POST"
+                              uri-template="{uri.var.apiUrl}/sharing/create_shared_link_with_settings"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+        <!-- Remove response custom header information -->
+        <header name="x-server-response-time" scope="transport" action="remove"/>
+        <header name="x-frame-options" scope="transport" action="remove"/>
+        <header name="x-dropbox-http-protocol" scope="transport" action="remove"/>
+        <header name="x-dropbox-request-id" scope="transport" action="remove"/>
+        <header name="set-cookie" scope="transport" action="remove"/>
+        <header name="x-content-type-options" scope="transport" action="remove"/>
+        <header name="cache-control" scope="transport" action="remove"/>
+        <header name="pragma" scope="transport" action="remove"/>
+    </sequence>
+</template>

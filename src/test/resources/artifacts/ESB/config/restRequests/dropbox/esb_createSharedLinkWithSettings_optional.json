@@ -1,0 +1,7 @@
+{
+  "apiUrl": "%s(dropboxApiUrl)",
+  "accessToken": "%s(accessToken)",
+  "apiVersion":"%s(apiVersion)",
+  "path": "%s(folderName2)/%s(fileName)",
+  "requestedVisibility":"%s(requestedVisibility)"
+}
