@@ -28,27 +28,27 @@
         <property name="uri.var.mode" expression="$func:mode"/>
         <script language="js">
         <![CDATA[
-		    var query = mc.getProperty("uri.var.query");
-		    var start = mc.getProperty("uri.var.start");
-		    var maxResults = mc.getProperty("uri.var.maxResults");
-		    var mode = mc.getProperty("uri.var.mode");
+            var query = mc.getProperty("uri.var.query");
+            var start = mc.getProperty("uri.var.start");
+            var maxResults = mc.getProperty("uri.var.maxResults");
+            var mode = mc.getProperty("uri.var.mode");
             var path = mc.getProperty("uri.var.path");
             var apiArgs = '{';
             apiArgs = apiArgs.concat('"'+'query":"' + query+'"');
-		    if (path!=null && path!= "") {
-		    	apiArgs = apiArgs.concat(',"'+'path":"' + path + '"');
-		    }
-		    if (start!=null && start!= "") {
-		    	apiArgs = apiArgs.concat(',"'+'start":' + start);
-		    }
-		    if (maxResults!=null && maxResults!= "") {
-		    	apiArgs = apiArgs.concat(',"'+'maxResults":' + maxResults);
-		    }
-		    if (mode!=null && mode!= "") {
-		    	apiArgs = apiArgs.concat(',"'+'mode":"' + mode + '"');
-		    }
-		    apiArgs = apiArgs.concat('}');
-		    mc.setProperty("uri.var.apiArgs", apiArgs);
+            if (path!=null && path!= "") {
+                apiArgs = apiArgs.concat(',"'+'path":"' + path + '"');
+            }
+            if (start!=null && start!= "") {
+                apiArgs = apiArgs.concat(',"'+'start":' + start);
+            }
+            if (maxResults!=null && maxResults!= "") {
+                apiArgs = apiArgs.concat(',"'+'maxResults":' + maxResults);
+            }
+            if (mode!=null && mode!= "") {
+                apiArgs = apiArgs.concat(',"'+'mode":"' + mode + '"');
+            }
+            apiArgs = apiArgs.concat('}');
+            mc.setProperty("uri.var.apiArgs", apiArgs);
         ]]>
         </script>
         <payloadFactory media-type="json">

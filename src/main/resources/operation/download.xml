@@ -29,7 +29,7 @@
         <![CDATA[
             var path = mc.getProperty("uri.var.path");
             var apiArgs = '{"path":"' + path+'"}';
-		    mc.setProperty("uri.var.apiArgs", apiArgs);
+            mc.setProperty("uri.var.apiArgs", apiArgs);
         ]]>
         </script>
         <header name="Dropbox-API-Arg" expression="$ctx:uri.var.apiArgs" scope="transport" type="STRING"/>
