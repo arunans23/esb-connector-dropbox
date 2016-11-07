@@ -42,7 +42,7 @@ public class DropboxConnectorIntegrationTest extends ConnectorIntegrationTestBas
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
 
-        init("dropbox-connector-2.0.0-SNAPSHOT");
+        init("dropbox-connector-2.0.0");
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
 
