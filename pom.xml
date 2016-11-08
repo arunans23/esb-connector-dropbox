@@ -175,13 +175,9 @@
         </dependency>
     </dependencies>
     <scm>
-        <connection>
-            scm:git:https://github.com/wso2-extensions/esb-connector-dropbox.git
-        </connection>
+        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-dropbox.git</connection>
         <url>https://github.com/wso2-extensions/esb-connector-dropbox.git</url>
-        <developerConnection>
-            scm:git:https://github.com/wso2-extensions/esb-connector-dropbox
-        </developerConnection>
+        <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-dropbox</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <build>
