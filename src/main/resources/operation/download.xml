@@ -18,23 +18,15 @@
 -->
 <template name="download" xmlns="http://ws.apache.org/ns/synapse">
     <sequence>
-        <payloadFactory media-type="json">
-            <format>
-            </format>
-            <args/>
-        </payloadFactory>
-        <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
+        <header name="Dropbox-API-Arg" expression="fn:concat('{&#34;path&#34;:','&#34;',$ctx:uri.var.path, '&#34;}')"
+                scope="transport" type="STRING"/>
+        <property name="messageType" scope="axis2" value=""/>
         <property name="FORCE_POST_PUT_NOBODY" value="true" scope="axis2" type="BOOLEAN"/>
         <script language="js">
-        <![CDATA[
-            var path = mc.getProperty("uri.var.path");
-            var apiArgs = '{"path":"' + path+'"}';
-            mc.setProperty("uri.var.apiArgs", apiArgs);
-        ]]>
+            <![CDATA[
+                mc.getEnvelope().getBody().getFirstElement().detach();
+            ]]>
         </script>
-        <header name="Dropbox-API-Arg" expression="$ctx:uri.var.apiArgs" scope="transport" type="STRING"/>
-        <property name="messageType" scope="axis2" value=""/>
-
         <filter source="$ctx:dropboxBlocking" regex="true">
             <then>
                 <call blocking="true">
