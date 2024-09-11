@@ -4,7 +4,7 @@
     "category": "Storage and Content Management",
     "documentationUrl": "https://docs.wso2.org/display/ESBCONNECTORS/Dropbox+Connector",
     "description": "The Dropbox connector allows you to access the exposed API through the WSO2 ESB. Dropbox is a file hosting service operated by Dropbox, Inc. that offers cloud storage, file synchronization, and client software. Dropbox allows users to create a special folder on each of their computers, which Dropbox then synchronizes so that it appears to be the same folder (with the same contents) regardless of which computer is used to view it. The connector uses the Dropbox API Reference.",
-    "status": "Active",
+    "status": "Inactive",
     "labels": [
         "connector"
     ],
